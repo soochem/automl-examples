@@ -1,0 +1,4 @@
+.idea/
+venv/
+custom-resnet-tf/
+custom-resnet-torch/

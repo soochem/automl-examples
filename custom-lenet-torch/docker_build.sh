@@ -1,0 +1,1 @@
+docker build -t soochem/custom-lenet-torch:0.0.1 .

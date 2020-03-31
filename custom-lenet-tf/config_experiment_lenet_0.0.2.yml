@@ -1,0 +1,54 @@
+apiVersion: "kubeflow.org/v1alpha3"
+kind: Experiment
+metadata:
+ namespace: hozoonkim
+ labels:
+   controller-tools.k8s.io: "1.0"
+ name: custom-lenet-tf
+spec:
+ objective:
+   type: maximize
+   goal: 0.99
+   objectiveMetricName: Validation-accuracy
+   additionalMetricNames:
+     - Train-accuracy
+ algorithm:
+   algorithmName: random
+ parallelTrialCount: 3
+ maxTrialCount: 5
+ maxFailedTrialCount: 3
+ parameters:
+   - name: --learning_rate
+     parameterType: double
+     feasibleSpace:
+       min: "0.01"
+       max: "0.03"
+   - name: --dropout
+     parameterType: double
+     feasibleSpace:
+       min: "0.2"
+       max: "0.3"
+ trialTemplate:
+   goTemplate:
+       rawTemplate: |-
+         apiVersion: batch/v1
+         kind: Job
+         metadata:
+           name: {{.Trial}}
+           namespace: {{.NameSpace}}
+         spec:
+           template:
+             spec:
+               containers:
+               - name: {{.Trial}}
+                 image: docker.io/soochem/custom-mnist-tf:0.0.2  # my docker image
+                 command:
+                 - "python3"
+                 - "/app/task.py"  # assign entry point
+                 - "--batch-size=64"
+                 {{- with .HyperParameters}}
+                 {{- range .}}
+                 - "{{.Name}}={{.Value}}"
+                 {{- end}}
+                 {{- end}}
+               restartPolicy: Never
