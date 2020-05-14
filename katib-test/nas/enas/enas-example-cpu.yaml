@@ -13,7 +13,7 @@ apiVersion: "kubeflow.org/v1alpha3"
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: nas-rl-example-cpu
+  name: enas-example-cpu
 spec:
   parallelTrialCount: 2
   maxTrialCount: 3

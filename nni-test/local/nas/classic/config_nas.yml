@@ -1,0 +1,19 @@
+#nnictl ss_gen --trial_command="python3 mnist.py" --trial_dir=./ --file=ss.json
+authorName: default
+experimentName: example_mnist
+trialConcurrency: 1
+maxExecDuration: 1h
+maxTrialNum: 10
+#choice: local, remote, pai
+trainingServicePlatform: local
+#please use `nnictl ss_gen` to generate search space file first
+searchSpacePath: ./ss.json
+useAnnotation: False
+tuner:
+  codeDir: ~/PycharmProjects/automl-test/nni/examples/tuners/random_nas_tuner
+  classFileName: random_nas_tuner.py
+  className: RandomNASTuner
+trial:
+  command: python3 mnist.py
+  codeDir: .
+  gpuNum: 0

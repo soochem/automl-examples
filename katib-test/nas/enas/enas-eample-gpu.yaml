@@ -9,7 +9,7 @@ apiVersion: "kubeflow.org/v1alpha3"
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: nas-rl-example-gpu
+  name: enas-example-gpu
 spec:
   parallelTrialCount: 3
   maxTrialCount: 12
