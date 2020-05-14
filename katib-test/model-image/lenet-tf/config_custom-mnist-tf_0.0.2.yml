@@ -1,22 +1,22 @@
 apiVersion: "kubeflow.org/v1alpha3"
 kind: Experiment
 metadata:
- namespace: hozoonkim
+ namespace: kubeflow
  labels:
    controller-tools.k8s.io: "1.0"
- name: custom-lenet-tf
+ name: custom-lenet-tf2
 spec:
  objective:
    type: maximize
    goal: 0.99
    objectiveMetricName: Validation-accuracy
    additionalMetricNames:
-     - Train-accuracy
+     - accuracy
  algorithm:
    algorithmName: random
  parallelTrialCount: 3
  maxTrialCount: 5
- maxFailedTrialCount: 3
+ maxFailedTrialCount: 1
  parameters:
    - name: --learning_rate
      parameterType: double
@@ -45,7 +45,7 @@ spec:
                  command:
                  - "python3"
                  - "/app/task.py"  # assign entry point
-                 - "--batch-size=64"
+                 - "--batch-size=64"  # --> error
                  {{- with .HyperParameters}}
                  {{- range .}}
                  - "{{.Name}}={{.Value}}"

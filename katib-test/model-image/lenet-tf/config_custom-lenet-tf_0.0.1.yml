@@ -1,10 +1,10 @@
 apiVersion: "kubeflow.org/v1alpha3"
 kind: Experiment
 metadata:
- namespace: kubeflow
+ namespace: default
  labels:
    controller-tools.k8s.io: "1.0"
- name: custom-lenet-tf
+ name: custom-lenet-tf3
 spec:
  objective:
    type: maximize
@@ -15,20 +15,19 @@ spec:
  algorithm:
    algorithmName: random
  parallelTrialCount: 3
- maxTrialCount: 5
+ maxTrialCount: 6
  maxFailedTrialCount: 3
  parameters:
    - name: --learning_rate
      parameterType: double
      feasibleSpace:
        min: "0.01"
-       max: "0.03"
-   - name: --optimizer
-     parameterType: categorical
+       max: "0.2"
+   - name: --dropout
+     parameterType: double
      feasibleSpace:
-       list:
-       - SGD
-       - Adam
+       min: "0.1"
+       max: "0.5"
  trialTemplate:
    goTemplate:
        rawTemplate: |-
@@ -42,11 +41,10 @@ spec:
              spec:
                containers:
                - name: {{.Trial}}
-                 image: docker.io/soochem/custom-mnist-tf  # my docker image
+                 image: docker.io/soochem/custom-lenet-tf:0.0.1
                  command:
                  - "python3"
-                 - "/app/task.py"  # assign entry point
-                 - "--batch-size=64"
+                 - "/app/task.py"
                  {{- with .HyperParameters}}
                  {{- range .}}
                  - "{{.Name}}={{.Value}}"

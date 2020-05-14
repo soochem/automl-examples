@@ -18,7 +18,7 @@ import torch.optim as optim
 
 WORLD_SIZE = int(os.environ.get('WORLD_SIZE', 1))
 
-logging.basicConfig(filename='/katib/mnist.log', level=logging.DEBUG)
+logging.basicConfig(filename='/katib-test/mnist.log', level=logging.DEBUG)
 
 
 class Net(nn.Module):
