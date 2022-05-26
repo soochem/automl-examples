@@ -2,7 +2,7 @@ nni==1.4
 mxnet==1.6.0
 autogluon==0.6.0
 numpy==1.18.2
-tensorflow==2.0.0
+tensorflow==2.7.2
 tensorboard==2.0.2
 tensorflow-estimator==2.0.1
 torch==1.4.0
