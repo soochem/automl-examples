@@ -1,5 +1,5 @@
 nni==1.4
-mxnet==1.6.0
+mxnet==1.9.1
 autogluon==0.6.0
 numpy==1.18.2
 tensorflow==2.0.0
